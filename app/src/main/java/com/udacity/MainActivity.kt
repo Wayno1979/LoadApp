@@ -1,19 +1,23 @@
 package com.udacity
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.udacity.util.sendNotification
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -24,8 +28,6 @@ class MainActivity : AppCompatActivity() {
     private var selectedFileName: String? = null
 
     private lateinit var notificationManager: NotificationManager
-    private lateinit var pendingIntent: PendingIntent
-    private lateinit var action: NotificationCompat.Action
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        createChannel()
 
         custom_button.setOnClickListener {
             download()
@@ -58,13 +61,14 @@ class MainActivity : AppCompatActivity() {
                         "Failed"
                     }
 
-                    //todo: send notification
-
-                    Toast.makeText(
+                    //send notification
+                    notificationManager.sendNotification(
+                        CHANNEL_ID,
+                        getString(R.string.notification_description),
                         applicationContext,
-                        downloadStatus,
-                        Toast.LENGTH_LONG)
-                        .show()
+                        selectedFileName!!,
+                        downloadStatus
+                    )
 
                     custom_button.buttonState = ButtonState.Completed
                     custom_button.isEnabled = true
@@ -106,12 +110,38 @@ class MainActivity : AppCompatActivity() {
             val isChecked = view.isChecked
 
             when (view.getId()) {
-                R.id.radio_glide -> if (isChecked) selectedUrl = GLIDE_URL
-                R.id.radio_load_app -> if (isChecked)  selectedUrl = LOAD_APP_URL
-                R.id.radio_retrofit -> if (isChecked) selectedUrl = RETROFIT_URL
+                R.id.radio_glide -> if (isChecked) {
+                    selectedUrl = GLIDE_URL
+                    selectedFileName = getString(R.string.glide_radio)
+                }
+                R.id.radio_load_app -> if (isChecked)  {
+                    selectedUrl = LOAD_APP_URL
+                    selectedFileName = getString(R.string.load_app_radio)
+                }
+                R.id.radio_retrofit -> if (isChecked) {
+                    selectedUrl = RETROFIT_URL
+                    selectedFileName = getString(R.string.retrofit_radio)
+                }
             }
+        }
+    }
 
-            selectedFileName = view.text.toString()
+    private fun createChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                CHANNEL_ID,
+                getString(R.string.notification_channel_name),
+                NotificationManager.IMPORTANCE_HIGH)
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = getString(R.string.notification_description)
+
+            notificationManager = getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
         }
     }
 
