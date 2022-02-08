@@ -12,9 +12,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="@dimen/image_height"
+        android:layout_marginStart="@dimen/margin_standard"
+        android:layout_marginEnd="@dimen/margin_standard"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,9 +25,9 @@
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_standard"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_standard"
         app:layout_constraintBottom_toTopOf="@+id/custom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +37,9 @@
             android:id="@+id/radio_glide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
+            android:minHeight="@dimen/margin_large"
             android:onClick="onRadioButtonClicked"
-            android:paddingBottom="16dp"
+            android:paddingBottom="@dimen/margin_standard"
             android:text="@string/glide_radio"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -47,9 +47,9 @@
             android:id="@+id/radio_load_app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
+            android:minHeight="@dimen/margin_large"
             android:onClick="onRadioButtonClicked"
-            android:paddingBottom="16dp"
+            android:paddingBottom="@dimen/margin_standard"
             android:text="@string/load_app_radio"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -57,7 +57,7 @@
             android:id="@+id/radio_retrofit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
+            android:minHeight="@dimen/margin_large"
             android:onClick="onRadioButtonClicked"
             android:text="@string/retrofit_radio"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -65,9 +65,10 @@
 
     <com.udacity.LoadingButton
         android:id="@+id/custom_button"
+        android:background="@color/colorPrimary"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/margin_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

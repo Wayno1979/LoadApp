@@ -6,4 +6,6 @@
     <dimen name="margin_medium">32dp</dimen>
     <dimen name="margin_large">48dp</dimen>
     <dimen name="text_size_standard">22sp</dimen>
+    <dimen name="image_height">200dp</dimen>
+    <dimen name="button_height">60dp</dimen>
 </resources>
