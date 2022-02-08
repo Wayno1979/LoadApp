@@ -65,12 +65,14 @@
 
     <com.udacity.LoadingButton
         android:id="@+id/custom_button"
-        android:background="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height"
         android:layout_margin="@dimen/margin_standard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:backgroundColour="@color/colorPrimary"
+        app:loadingColour="@color/colorPrimaryDark"
+        app:textColour="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
