@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity() {
 
     private var downloadID: Long = 0
-    private var url: String? = null
-    private var fileName: String? = null
+    private var selectedUrl: String? = null
+    private var selectedFileName: String? = null
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
@@ -42,13 +42,45 @@ class MainActivity : AppCompatActivity() {
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            val action = intent?.action
+
+            if (downloadID == id && action.equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
+                val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+                val query = DownloadManager.Query()
+                query.setFilterById(id)
+
+                val cursor = downloadManager.query(query)
+                if (cursor.moveToFirst()) {
+                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    val downloadStatus = if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                        "Success"
+                    } else {
+                        "Failed"
+                    }
+
+                    //todo: send notification
+
+                    Toast.makeText(
+                        applicationContext,
+                        downloadStatus,
+                        Toast.LENGTH_LONG)
+                        .show()
+
+                    custom_button.buttonState = ButtonState.Completed
+                    custom_button.isEnabled = true
+                }
+            }
         }
     }
 
     private fun download() {
-        if (url != null) {
+        if (selectedUrl != null) {
+
             // radio button selected, try to download
-            val request = DownloadManager.Request(Uri.parse(url))
+            custom_button.buttonState = ButtonState.Loading
+            custom_button.isEnabled = false
+
+            val request = DownloadManager.Request(Uri.parse(selectedUrl))
                 .setTitle(getString(R.string.app_name))
                 .setDescription(getString(R.string.app_description))
                 .setRequiresCharging(false)
@@ -74,12 +106,12 @@ class MainActivity : AppCompatActivity() {
             val isChecked = view.isChecked
 
             when (view.getId()) {
-                R.id.radio_glide -> if (isChecked) url = GLIDE_URL
-                R.id.radio_load_app -> if (isChecked)  url = LOAD_APP_URL
-                R.id.radio_retrofit -> if (isChecked) url = RETROFIT_URL
+                R.id.radio_glide -> if (isChecked) selectedUrl = GLIDE_URL
+                R.id.radio_load_app -> if (isChecked)  selectedUrl = LOAD_APP_URL
+                R.id.radio_retrofit -> if (isChecked) selectedUrl = RETROFIT_URL
             }
 
-            fileName = view.text.toString()
+            selectedFileName = view.text.toString()
         }
     }
 

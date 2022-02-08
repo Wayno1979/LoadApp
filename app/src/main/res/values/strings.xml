@@ -18,4 +18,5 @@
     <string name="status_label">Status:</string>
     <string name="ok">OK</string>
     <string name="select_radio_button">Please select a radio button and try again.</string>
+    <string name="download">Download</string>
 </resources>
