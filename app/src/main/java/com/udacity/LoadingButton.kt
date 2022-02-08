@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.withStyledAttributes
 import kotlin.properties.Delegates
 
 class LoadingButton @JvmOverloads constructor(
@@ -59,8 +60,8 @@ class LoadingButton @JvmOverloads constructor(
         val bounds = Rect()
         paint.getTextBounds(text, 0, text.length, bounds)
 
-        val buttonCentreX = measuredWidth.toFloat() / 2
-        val buttonCentreY = measuredHeight.toFloat() / 2 - bounds.centerY()
+        val buttonCentreX = widthSize.toFloat() / 2
+        val buttonCentreY = heightSize.toFloat() / 2 - bounds.centerY()
 
         canvas?.drawText(text, buttonCentreX, buttonCentreY, paint)
     }
