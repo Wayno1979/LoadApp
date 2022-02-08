@@ -50,7 +50,7 @@
             android:minHeight="48dp"
             android:onClick="onRadioButtonClicked"
             android:paddingBottom="16dp"
-            android:text="@string/loadapp_radio"
+            android:text="@string/load_app_radio"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <RadioButton

@@ -2,4 +2,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="default_text_size">20sp</dimen>
+    <dimen name="margin_standard">16dp</dimen>
+    <dimen name="margin_medium">32dp</dimen>
+    <dimen name="margin_large">48dp</dimen>
+    <dimen name="text_size_standard">22sp</dimen>
 </resources>
