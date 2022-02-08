@@ -22,11 +22,11 @@ class LoadingButton @JvmOverloads constructor(
     private var backgroundColour = 0
     private var loadingColour = 0
     private var textColor = 0
-    private var progress = 0
+    private var progress = 0f
     private var widthSize = 0
     private var heightSize = 0
 
-    private val valueAnimator = ValueAnimator.ofInt(0, 360).setDuration(2000)
+    private var valueAnimator = ValueAnimator()
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -45,7 +45,7 @@ class LoadingButton @JvmOverloads constructor(
             ButtonState.Completed -> {
                 text = resources.getString(R.string.download)
                 valueAnimator.cancel()
-                progress = 0
+                progress = 0f
             }
             else -> {}
         }
@@ -62,13 +62,15 @@ class LoadingButton @JvmOverloads constructor(
             textColor = getColor(R.styleable.DownloadButton_textColour, 0)
         }
 
+        valueAnimator = ValueAnimator.ofFloat(0f, 1f)
         valueAnimator.apply {
             addUpdateListener {
-                progress = it.animatedValue as Int
+                progress = it.animatedValue as Float
                 invalidate()
             }
+            duration = 3000
             repeatCount = ValueAnimator.INFINITE
-            repeatMode = ValueAnimator.RESTART
+            repeatMode = ValueAnimator.REVERSE
         }
     }
 
@@ -77,11 +79,11 @@ class LoadingButton @JvmOverloads constructor(
 
         // background
         paint.color = backgroundColour
-        canvas?.drawRect(0f,0f,widthSize.toFloat(), heightSize.toFloat(), paint)
+        canvas?.drawRect(0f,0f, widthSize.toFloat(), heightSize.toFloat(), paint)
 
         // loading
         paint.color = loadingColour
-        canvas?.drawRect(0f, 0f, widthSize * progress/360f, heightSize.toFloat(), paint)
+        canvas?.drawRect(0f, 0f, progress * widthSize.toFloat(), heightSize.toFloat(), paint)
 
         // get x and y centre for drawing text on button
         val bounds = Rect()
