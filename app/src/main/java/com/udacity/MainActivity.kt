@@ -112,15 +112,15 @@ class MainActivity : AppCompatActivity() {
             when (view.getId()) {
                 R.id.radio_glide -> if (isChecked) {
                     selectedUrl = GLIDE_URL
-                    selectedFileName = getString(R.string.glide_radio)
+                    selectedFileName = getString(R.string.glide)
                 }
                 R.id.radio_load_app -> if (isChecked)  {
                     selectedUrl = LOAD_APP_URL
-                    selectedFileName = getString(R.string.load_app_radio)
+                    selectedFileName = getString(R.string.load_app)
                 }
                 R.id.radio_retrofit -> if (isChecked) {
                     selectedUrl = RETROFIT_URL
-                    selectedFileName = getString(R.string.retrofit_radio)
+                    selectedFileName = getString(R.string.retrofit)
                 }
             }
         }

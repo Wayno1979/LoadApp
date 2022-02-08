@@ -20,4 +20,7 @@
     <string name="select_radio_button">Please select a radio button and try again.</string>
     <string name="download">Download</string>
     <string name="notification_channel_name">LoadApp-Channel</string>
+    <string name="glide">Glide Repo</string>
+    <string name="load_app">LoadApp Repo</string>
+    <string name="retrofit">Retrofit Repo</string>
 </resources>
